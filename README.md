@@ -15,11 +15,14 @@ This will be a flutter application that will be compatible with Windows and Web 
 - [ ] Code to format added categories
 - [ ] Functional UI for entering, editing, and deleting purchases (using a grid)
 - [ ] Functional UI for seeing current weekly and monthly remaining balances
+- [ ] Functional UI for weekly overflow balances
+- [ ] Code to add overflow into savings buckets at the end of each month
 - [ ] Functional UI for savings balances
 - [ ] Functional UI for adding savings buckets
 - [ ] Code to format added savings buckets
 - [ ] Functional UI for seeing past weekly and monthly results
 - [ ] Improve UI visuals
+- [ ] Functional UI for planning future goals and progress with a Calendar
 - [ ] Functional UI for statistics and charts of spending habits
 - [ ] Carousel buttons to switch between pages with page numbers or names
 

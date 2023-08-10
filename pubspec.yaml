@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  googleapis: 11.4.0
+  google_sign_in: 6.1.4
   excel: 2.1.0
   http: 1.1.0
 

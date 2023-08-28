@@ -54,7 +54,8 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ViewCurrentPeriodPage()),
+                  MaterialPageRoute(
+                      builder: (context) => ViewCurrentPeriodPage()),
                 );
               },
               child: Text('View Current Period'),
@@ -80,142 +81,142 @@ class AddPurchasePage extends StatefulWidget {
   _AddPurchasePageState createState() => _AddPurchasePageState();
 }
 
-  class _AddPurchasePageState extends State<AddPurchasePage> {
-    final TextEditingController dateController = TextEditingController();
-    final TextEditingController categoryController = TextEditingController();
-    final TextEditingController priceController = TextEditingController();
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
+class _AddPurchasePageState extends State<AddPurchasePage> {
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController categoryController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
-    @override
-    void dispose() {
-      dateController.dispose();
-      categoryController.dispose();
-      priceController.dispose();
-      nameController.dispose();
-      descriptionController.dispose();
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    dateController.dispose();
+    categoryController.dispose();
+    priceController.dispose();
+    nameController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
 
-    Future<void> addPurchaseToSheet() async {
-      final spreadsheetId = '1Ei6g2bqXfw85vIMfvmMYyVgbIQBhn42whIu7birIwYo';
-      final apiKey = 'AIzaSyBQLrhJVB6SPOieR1eL62EKmdQvd0XQFik';
-      final sheetName = 'Item Entries Data';
+  Future<void> addPurchaseToSheet() async {
+    final spreadsheetId = '1Ei6g2bqXfw85vIMfvmMYyVgbIQBhn42whIu7birIwYo';
+    final apiKey = 'AIzaSyBQLrhJVB6SPOieR1eL62EKmdQvd0XQFik';
+    final sheetName = 'Item Entries Data';
 
-      final url = Uri.parse(
-          'https://sheets.googleapis.com/v4/spreadsheets/$spreadsheetId/values/$sheetName?key=$apiKey');
+    final url = Uri.parse(
+        'https://sheets.googleapis.com/v4/spreadsheets/$spreadsheetId/values/$sheetName?key=$apiKey');
 
-      final headers = {
-        'Content-Type': 'application/json',
-      };
+    final headers = {
+      'Content-Type': 'application/json',
+    };
 
-      final rowData = {
-        'Date': dateController.text,
-        'Category': categoryController.text,
-        'Price': priceController.text,
-        'Name': nameController.text,
-        'Description': descriptionController.text,
-      };
+    final rowData = {
+      'Date': dateController.text,
+      'Category': categoryController.text,
+      'Price': priceController.text,
+      'Name': nameController.text,
+      'Description': descriptionController.text,
+    };
 
-      final body = json.encode({
-        'values': [rowData.values.toList()],
-      });
+    final body = json.encode({
+      'values': [rowData.values.toList()],
+    });
 
-      try {
-        final response = await http.post(url, headers: headers, body: body);
-        if (response.statusCode == 200) {
-          showSnackbar('Purchase added successfully');
-        } else {
-          showSnackbar('Error adding purchase');
-        }
-      } catch (e) {
-        showSnackbar('Exception while adding purchase');
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        showSnackbar('Purchase added successfully');
+      } else {
+        showSnackbar('Error adding purchase');
       }
+    } catch (e) {
+      showSnackbar('Exception while adding purchase');
     }
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Add Purchase'),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
-          child: Table(
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            columnWidths: {
-              0: FlexColumnWidth(2),
-              1: FlexColumnWidth(3),
-            },
-            children: [
-              TableRow(
-                children: [
-                  TableCell(
-                    child: TextFormField(
-                      controller: dateController,
-                      decoration: InputDecoration(
-                        labelText: 'Date (MM/DD/YYYY)',
-                      ),
-                    ),
-                  ),
-                  TableCell(
-                    child: TextFormField(
-                      controller: categoryController,
-                      decoration: InputDecoration(
-                        labelText: 'Category',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableCell(
-                    child: TextFormField(
-                      controller: priceController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: 'Price',
-                      ),
-                    ),
-                  ),
-                  TableCell(
-                    child: TextFormField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableCell(
-                    child: TextFormField(
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                        labelText: 'Description',
-                      ),
-                    ),
-                  ),
-                  // Add an empty TableCell for alignment
-                  TableCell(
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await addPurchaseToSheet();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Purchase'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Table(
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          columnWidths: {
+            0: FlexColumnWidth(2),
+            1: FlexColumnWidth(3),
           },
-          child: Icon(Icons.check),
+          children: [
+            TableRow(
+              children: [
+                TableCell(
+                  child: TextFormField(
+                    controller: dateController,
+                    decoration: InputDecoration(
+                      labelText: 'Date (MM/DD/YYYY)',
+                    ),
+                  ),
+                ),
+                TableCell(
+                  child: TextFormField(
+                    controller: categoryController,
+                    decoration: InputDecoration(
+                      labelText: 'Category',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            TableRow(
+              children: [
+                TableCell(
+                  child: TextFormField(
+                    controller: priceController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Price',
+                    ),
+                  ),
+                ),
+                TableCell(
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            TableRow(
+              children: [
+                TableCell(
+                  child: TextFormField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Description',
+                    ),
+                  ),
+                ),
+                // Add an empty TableCell for alignment
+                TableCell(
+                  child: SizedBox(),
+                ),
+              ],
+            ),
+          ],
         ),
-      );
-    }
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await addPurchaseToSheet();
+        },
+        child: Icon(Icons.check),
+      ),
+    );
+  }
 
   void showSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -239,81 +240,81 @@ class _ViewEntriesPageState extends State<ViewEntriesPage> {
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-  appBar: AppBar(
-  title: Text('View Entries'),
-  ),
-  body: SingleChildScrollView(
-  padding: EdgeInsets.all(16),
-  child: Column(
-  children: <Widget>[
-  // Add filter options here (e.g., dropdowns for date, category)
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('View Entries'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: <Widget>[
+            // Add filter options here (e.g., dropdowns for date, category)
 
-  SizedBox(height: 16),
+            SizedBox(height: 16),
 
-  Table(
-  columnWidths: {
-  0: FlexColumnWidth(2),
-  1: FlexColumnWidth(3),
-  2: FlexColumnWidth(2),
-  3: FlexColumnWidth(2),
-  },
-  border: TableBorder.all(),
-  children: [
-  TableRow(
-  decoration: BoxDecoration(
-  color: Colors.grey[200],
-  ),
-  children: [
-  TableCell(child: Text('Date')),
-  TableCell(child: Text('Category')),
-  TableCell(child: Text('Price')),
-  TableCell(child: Text('Actions')),
-  ],
-  ),
-  ...entries.map((entry) {
-  return TableRow(
-  children: [
-  TableCell(child: Text(entry.date)),
-  TableCell(child: Text(entry.category)),
-  TableCell(child: Text(entry.price.toString())),
-  TableCell(
-  child: Row(
-  children: [
-  IconButton(
-  onPressed: () {
-  // Implement edit functionality
-  },
-  icon: Icon(Icons.edit),
-  ),
-  IconButton(
-  onPressed: () {
-  // Implement delete functionality
-  },
-  icon: Icon(Icons.delete),
-  ),
-  ],
-  ),
-  ),
-  ],
-  );
-  }).toList(),
-  ],
-  ),
-  ],
-  ),
-  ),
-  );
+            Table(
+              columnWidths: {
+                0: FlexColumnWidth(2),
+                1: FlexColumnWidth(3),
+                2: FlexColumnWidth(2),
+                3: FlexColumnWidth(2),
+              },
+              border: TableBorder.all(),
+              children: [
+                TableRow(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                  ),
+                  children: [
+                    TableCell(child: Text('Date')),
+                    TableCell(child: Text('Category')),
+                    TableCell(child: Text('Price')),
+                    TableCell(child: Text('Actions')),
+                  ],
+                ),
+                ...entries.map((entry) {
+                  return TableRow(
+                    children: [
+                      TableCell(child: Text(entry.date)),
+                      TableCell(child: Text(entry.category)),
+                      TableCell(child: Text(entry.price.toString())),
+                      TableCell(
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                // Implement edit functionality
+                              },
+                              icon: Icon(Icons.edit),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // Implement delete functionality
+                              },
+                              icon: Icon(Icons.delete),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
-  }
+}
 
-  class Entry {
+class Entry {
   final String date;
   final String category;
   final double price;
 
   Entry({required this.date, required this.category, required this.price});
-  }
+}
 
 class ViewCurrentPeriodPage extends StatefulWidget {
   @override
@@ -363,14 +364,16 @@ class _SetBudgetsPageState extends State<SetBudgetsPage> {
     final apiKey = 'AIzaSyBQLrhJVB6SPOieR1eL62EKmdQvd0XQFik';
 
     final response = await http.get(
-      Uri.parse('https://sheets.googleapis.com/v4/spreadsheets/$spreadsheetId/values/$sheetRange?key=$apiKey'),
+      Uri.parse(
+          'https://sheets.googleapis.com/v4/spreadsheets/$spreadsheetId/values/$sheetRange?key=$apiKey'),
     );
 
     try {
       final Map<String, dynamic> responseData = json.decode(response.body);
       final firstRow = responseData['values']?.first as List<dynamic>?;
       if (firstRow != null) {
-        numberOfCategories = firstRow.where((cell) => cell != null && cell.isNotEmpty).length;
+        numberOfCategories =
+            firstRow.where((cell) => cell != null && cell.isNotEmpty).length;
         setState(() {});
       }
     } catch (e) {
@@ -393,7 +396,7 @@ class _SetBudgetsPageState extends State<SetBudgetsPage> {
           },
           children: List.generate(
             numberOfCategories,
-                (index) => TableRow(
+            (index) => TableRow(
               children: [
                 TableCell(
                   child: Text(
@@ -403,8 +406,8 @@ class _SetBudgetsPageState extends State<SetBudgetsPage> {
                 ),
                 TableCell(
                   child: TextFormField(
-                    // Create TextFormField for budget input
-                  ),
+                      // Create TextFormField for budget input
+                      ),
                 ),
               ],
             ),
